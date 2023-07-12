@@ -65,7 +65,8 @@ void	search_key(int key, int file, char *key_buf, int i)
 		if ((*buf == 0xA) || (i == -1))
 		{
 			i = 0;
-			curent_byte = read(file, buf, 1);
+			if (*buf == 0xA)
+				curent_byte = read(file, buf, 1);
 			while ((*buf >= 0x30) && (*buf <= 0x39) && curent_byte)
 			{
 				key_buf[i] = *buf;
