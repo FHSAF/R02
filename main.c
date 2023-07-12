@@ -14,15 +14,19 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <fcntl.h>
+#include <stdio.h>
 
+void	add_space(int len);
 int		ft_atoi(char *str);
 int		handle_file(char *path, int ds);
 bool	any_error(int argc, char **argv);
+void	next_digit(int *len, long int *temp, int *digit);
+void	case_10(int digit, int *len, char *path, long int *temp);
 void	case_100(int digit, int *len, char *path, long int *temp);
 int		get_power(int base, int power);
 void	print_values(int file);
 void	get_value(int key, int key_len, char *path);
-void	skip_null(long int *temp, int *len, char *path);
+void	skip_null(long int *temp, int *len);
 
 int	rev_num(int num, long int *temp)
 {
@@ -55,12 +59,11 @@ void	write_num(int num, char *path)
 	while (len > 0)
 	{
 		digit = (temp % 10);
-		temp /= 10;
 		case_100(digit, &len, path, &temp);
-		if (len > 3)
-			get_value(get_power(1, len - 1), len, path);
-		len--;
-		skip_null(&temp, &len, path);
+		if (len > 2)
+			get_value(get_power(1, len), len+1, path);
+		skip_null(&temp, &len);
+		add_space(len);
 	}
 	write(1, "\n", 1);
 }
@@ -99,30 +102,68 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
+void	next_digit(int *len, long int *temp, int *digit)
+{
+	*len = *len - 1;
+	*temp = *temp / 10;
+	*digit = *temp % 10;
+}
+
 void	case_100(int digit, int *len, char *path, long int *temp)
+{
+	int	rem;
+	int	i;
+
+	rem = *len % 3;
+	i = 2;
+	if (rem == 0)
+	{
+		get_value(digit, 1, path);
+		write(1, " ", 1);
+		get_value(100, 3, path);
+		next_digit(len, temp, &digit);
+		while ((digit == 0) && (i > 0) && (*len > 0))
+		{	
+			next_digit(len, temp, &digit);
+			i--;
+		}
+		add_space(*len);
+	}
+	if ((i != 0) && (*len > 0))
+		case_10(digit, len, path, temp);
+}
+
+void	case_10(int digit, int *len, char *path, long int *temp)
 {
 	int	rem;
 
 	rem = *len % 3;
 	if (rem == 1)
+	{
 		get_value(digit, 1, path);
+		next_digit(len, temp, &digit);
+		add_space(*len);
+	}
 	else if (rem == 2)
 	{
 		if (digit == 1)
-		{
-			digit = digit * 10 + *temp % 10;
-			*temp = *temp / 10;
-			*len = *len - 1;
-		}
+			digit = digit * 10 + (*temp/10) % 10;
 		else
-		{
 			digit *= 10;
-		}
 		get_value(digit, 2, path);
-	}
-	else
-	{
-		get_value(digit, 1, path);
-		get_value(100, 3, path);
-	}
+		rem = digit;
+		next_digit(len, temp, &digit);
+		if ((rem >= 20) && (digit != 0))
+			write(1, " ", 1);
+		if ((rem >= 20) && (digit != 0))
+			get_value(digit, 1, path);
+		next_digit(len, temp, &digit);
+		add_space(*len);
+	}	
+}
+
+void	add_space(int len)
+{
+	if (len != 0)
+		write(1, " ", 1);
 }

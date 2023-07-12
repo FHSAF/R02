@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dkremer <dkremer@student.42heilbronn.de>   +#+  +:+       +#+         #
+#    By: dkremer <femuzaff@student.42heilbronn.de   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/01 18:28:14 by dkremer           #+#    #+#              #
 #    Updated: 2023/07/02 21:09:04 by dkremer          ###   ########.fr        #
