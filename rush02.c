@@ -10,12 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <fcntl.h>
-#define flag = 0
-
-int	ft_atoi(char *str);
-int	handle_file(char *path, int ds);
+#include "rush02.h"
 
 int	get_power(int base, int power)
 {

@@ -13,7 +13,7 @@ cc		= gcc
 
 CFLAGS	= -Wall -Wextra -Werror
 
-SRC		= main.c handlefile.c ft_atoi.c any_error.c rush02.c
+SRC		= main.c handlefile.c ft_atoi.c any_error.c rush02.c read_number.c
 
 OBJ		= $(SRC:.c=.o)
 

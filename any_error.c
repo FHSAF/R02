@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdbool.h>
-#include <unistd.h>
+#include "rush02.h"
 
 bool	any_error(int argc, char **argv)
 {
